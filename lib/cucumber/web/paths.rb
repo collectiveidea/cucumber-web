@@ -13,7 +13,18 @@ module Cucumber
 
       def path(page_name)
         paths.detect do |pattern, path|
-          return path if pattern === page_name
+          if pattern === page_name
+            if path.is_a?(Proc)
+              if pattern.is_a?(Regexp) && path.arity == 1
+                match = pattern.match(page_name)
+                return path.call(match)
+              else
+                return path.call
+              end
+            else
+              return path
+            end
+          end
         end
       end
 

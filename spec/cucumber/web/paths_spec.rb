@@ -85,5 +85,10 @@ describe Cucumber::Web::Paths do
       subject.stub(:paths => [['the homepage', '/'], [/^the home ?page$/, '/home']])
       subject.path('the homepage').should == '/'
     end
+
+    it 'returns an evaluated block value' do
+      subject.stub(:paths => [['the homepage', proc{ '/' }]])
+      subject.path('the homepage').should == '/'
+    end
   end
 end
