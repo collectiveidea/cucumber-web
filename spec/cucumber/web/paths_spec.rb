@@ -57,6 +57,12 @@ describe Cucumber::Web::Paths do
         subject.paths.should == [['the homepage', '/']]
       end
     end
+
+    it 'adds paths to the top of the stack' do
+      subject.paths.define(/^the home ?page$/, '/home')
+      subject.paths.define('the homepage', '/')
+      subject.paths.should == [['the homepage', '/'], [/^the home ?page$/, '/home']]
+    end
   end
 
   describe '.path' do
@@ -73,6 +79,11 @@ describe Cucumber::Web::Paths do
     it 'returns nil for unmatched page names' do
       subject.stub(:paths => [['the homepage', '/']])
       subject.path('the home page').should == nil
+    end
+
+    it 'returns the matching path nearest the top of the stack' do
+      subject.stub(:paths => [['the homepage', '/'], [/^the home ?page$/, '/home']])
+      subject.path('the homepage').should == '/'
     end
   end
 end

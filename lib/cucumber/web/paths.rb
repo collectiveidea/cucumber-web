@@ -3,7 +3,7 @@ module Cucumber
     module Paths
       class Proxy < ::Array
         def define(pattern, path = nil, &block)
-          self << [pattern, path || block]
+          unshift([pattern, path || block])
         end
       end
 
