@@ -55,5 +55,12 @@ describe Cucumber::Web::Paths do
         subject.paths.should == [[/^the home ?page$/, block]]
       end
     end
+
+    context 'when chained' do
+      it 'defines paths' do
+        subject.paths.define('the homepage', '/')
+        subject.paths.should == [['the homepage', '/']]
+      end
+    end
   end
 end
