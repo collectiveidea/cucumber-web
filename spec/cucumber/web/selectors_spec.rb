@@ -57,5 +57,38 @@ describe Cucumber::Web::Selectors do
         subject.selectors.should == [['the page', 'html > body']]
       end
     end
+
+    it 'adds selectors to the top of the stack' do
+      subject.selectors.define(/^the page$/, 'body')
+      subject.selectors.define('the page', 'html > body')
+      subject.selectors.should == [['the page', 'html > body'], [/^the page$/, 'body']]
+    end
+  end
+
+  describe '.selector' do
+    it 'matches string patterns' do
+      subject.stub(:selectors => [['the page', 'html > body']])
+      subject.selector('the page').should == 'html > body'
+    end
+
+    it 'matches regular expression patterns' do
+      subject.stub(:selectors => [[/^the page/, 'html > body']])
+      subject.selector('the page').should == 'html > body'
+    end
+
+    it 'returns nil for unmatched page names' do
+      subject.stub(:selectors => [['the page', 'html > body']])
+      subject.selector('the entire page').should == nil
+    end
+
+    it 'returns the matching selector nearest the top of the stack' do
+      subject.stub(:selectors => [['the page', 'html > body'], [/^the page$/, 'body']])
+      subject.selector('the page').should == 'html > body'
+    end
+
+    it 'returns an evaluated block value' do
+      subject.stub(:selectors => [['the page', proc{ 'html > body' }]])
+      subject.selector('the page').should == 'html > body'
+    end
   end
 end
