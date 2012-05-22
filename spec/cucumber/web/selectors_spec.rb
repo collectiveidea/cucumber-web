@@ -54,6 +54,15 @@ describe Cucumber::Web::Selectors do
         end
         subject.selectors.should == [[/^the page$/, block]]
       end
+
+      context 'and a block parameter' do
+        it 'defines selectors' do
+          subject.selectors do |selectors|
+            selectors.define('the page', 'html > body')
+          end
+          subject.selectors.should == [['the page', 'html > body']]
+        end
+      end
     end
 
     context 'when chained' do
