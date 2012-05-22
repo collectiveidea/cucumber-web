@@ -58,4 +58,21 @@ describe Cucumber::Web::Paths do
       end
     end
   end
+
+  describe '.path' do
+    it 'matches string patterns' do
+      subject.stub(:paths => [['the homepage', '/']])
+      subject.path('the homepage').should == '/'
+    end
+
+    it 'matches regular expression patterns' do
+      subject.stub(:paths => [[/^the home ?page/, '/']])
+      subject.path('the homepage').should == '/'
+    end
+
+    it 'returns nil for unmatched page names' do
+      subject.stub(:paths => [['the homepage', '/']])
+      subject.path('the home page').should == nil
+    end
+  end
 end
