@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/cucumber-web/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Steve Richert"]
@@ -13,5 +12,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "cucumber-web"
   gem.require_paths = ["lib"]
-  gem.version       = Cucumber::Web::VERSION
+  gem.version       = "0.0.1"
 end
