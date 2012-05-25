@@ -32,6 +32,25 @@ describe Cucumber::Web::Steps do
         subject.steps{ define(/^I (debug|pry)$/, block) }
         subject.steps.should == [[/^I (debug|pry)$/, block]]
       end
+
+      context 'and a block parameter' do
+        it 'defines steps' do
+          expect{ subject.steps{|s| s.define('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+        end
+      end
+    end
+
+    context 'when chained' do
+      it 'defines steps' do
+        expect{ subject.steps.define('I debug'){} }.to change{ subject.steps.size }.from(0).to(1)
+      end
+    end
+
+    it 'adds paths to the top of the stack' do
+      pry, debugger = proc{ binding.pry }, proc{ debugger }
+      subject.steps.define(/^I (debug|pry)$/, &pry)
+      subject.steps.define('I debug', &debugger)
+      subject.steps.should == [['I debug', debugger], [/^I (debug|pry)$/, pry]]
     end
 
     it 'aliases "define" as "step"' do
