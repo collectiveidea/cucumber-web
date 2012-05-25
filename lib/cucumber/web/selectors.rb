@@ -5,6 +5,8 @@ module Cucumber
         def define(pattern, selector = nil, &block)
           unshift([pattern, selector || block])
         end
+
+        alias_method :selector, :define
       end
 
       def selectors(&block)

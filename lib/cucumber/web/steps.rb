@@ -6,6 +6,8 @@ module Cucumber
           unshift([pattern, proc || block])
         end
 
+        alias_method :step, :define
+
         %w(Given When Then And But).each do |method|
           alias_method method, :define
         end

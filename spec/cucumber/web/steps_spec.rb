@@ -32,26 +32,30 @@ describe Cucumber::Web::Steps do
         subject.steps{ define(/^I (debug|pry)$/, block) }
         subject.steps.should == [[/^I (debug|pry)$/, block]]
       end
+    end
 
-      it 'aliases "define" as "Given"' do
-        expect{ subject.steps{ Given('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
-      end
+    it 'aliases "define" as "step"' do
+      expect{ subject.steps{ step('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+    end
 
-      it 'aliases "define" as "When"' do
-        expect{ subject.steps{ When('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
-      end
+    it 'aliases "define" as "Given"' do
+      expect{ subject.steps{ Given('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+    end
 
-      it 'aliases "define" as "Then"' do
-        expect{ subject.steps{ Then('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
-      end
+    it 'aliases "define" as "When"' do
+      expect{ subject.steps{ When('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+    end
 
-      it 'aliases "define" as "And"' do
-        expect{ subject.steps{ And('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
-      end
+    it 'aliases "define" as "Then"' do
+      expect{ subject.steps{ Then('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+    end
 
-      it 'aliases "define" as "But"' do
-        expect{ subject.steps{ But('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
-      end
+    it 'aliases "define" as "And"' do
+      expect{ subject.steps{ And('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+    end
+
+    it 'aliases "define" as "But"' do
+      expect{ subject.steps{ But('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
     end
   end
 end

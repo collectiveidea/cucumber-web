@@ -63,6 +63,10 @@ describe Cucumber::Web::Selectors do
       subject.selectors.define('the page', 'html > body')
       subject.selectors.should == [['the page', 'html > body'], [/^the page$/, 'body']]
     end
+
+    it 'aliases "define" as "selector"' do
+      expect{ subject.selectors{ selector('the page', 'html > body') } }.to change{ subject.selectors.size }.from(0).to(1)
+    end
   end
 
   describe '.selector' do

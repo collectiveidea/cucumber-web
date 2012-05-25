@@ -5,6 +5,8 @@ module Cucumber
         def define(pattern, path = nil, &block)
           unshift([pattern, path || block])
         end
+
+        alias_method :path, :define
       end
 
       def paths(&block)

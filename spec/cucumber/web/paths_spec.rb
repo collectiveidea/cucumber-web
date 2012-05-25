@@ -63,6 +63,10 @@ describe Cucumber::Web::Paths do
       subject.paths.define('the homepage', '/')
       subject.paths.should == [['the homepage', '/'], [/^the home ?page$/, '/home']]
     end
+
+    it 'aliases "define" as "path"' do
+      expect{ subject.paths{ path('the homepage', '/') } }.to change{ subject.paths.size }.from(0).to(1)
+    end
   end
 
   describe '.path' do
