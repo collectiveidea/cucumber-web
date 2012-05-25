@@ -45,16 +45,14 @@ describe Cucumber::Web::Paths do
 
       context 'and a block parameter' do
         it 'defines paths' do
-          subject.paths{|p| p.define('the homepage', '/') }
-          subject.paths.should == [['the homepage', '/']]
+          expect{ subject.paths{|p| p.define('the homepage', '/') } }.to change{ subject.paths.size }.from(0).to(1)
         end
       end
     end
 
     context 'when chained' do
       it 'defines paths' do
-        subject.paths.define('the homepage', '/')
-        subject.paths.should == [['the homepage', '/']]
+        expect{ subject.paths.define('the homepage', '/') }.to change{ subject.paths.size }.from(0).to(1)
       end
     end
 

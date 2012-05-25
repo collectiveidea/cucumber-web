@@ -45,16 +45,14 @@ describe Cucumber::Web::Selectors do
 
       context 'and a block parameter' do
         it 'defines selectors' do
-          subject.selectors{|s| s.define('the page', 'html > body') }
-          subject.selectors.should == [['the page', 'html > body']]
+          expect{ subject.selectors{|s| s.define('the page', 'html > body') } }.to change{ subject.selectors.size }.from(0).to(1)
         end
       end
     end
 
     context 'when chained' do
       it 'defines selectors' do
-        subject.selectors.define('the page', 'html > body')
-        subject.selectors.should == [['the page', 'html > body']]
+        expect{ subject.selectors.define('the page', 'html > body') }.to change{ subject.selectors.size }.from(0).to(1)
       end
     end
 
