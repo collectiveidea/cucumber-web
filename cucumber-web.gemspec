@@ -10,6 +10,8 @@ Gem::Specification.new do |gem|
   gem.summary     = 'Reusable web steps for Cucumber and Capybara'
   gem.homepage    = 'https://github.com/collectiveidea/cucumber-web'
 
+  gem.add_dependency 'cucumber', '~> 1.0'
+
   gem.add_development_dependency 'rspec', '~> 2.10'
 
   gem.files         = `git ls-files`.split($\)

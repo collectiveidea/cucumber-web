@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cucumber/rb_support/rb_dsl'
 
 describe Cucumber::Web::Steps do
   subject do
@@ -75,6 +76,19 @@ describe Cucumber::Web::Steps do
 
     it 'aliases "define" as "But"' do
       expect{ subject.steps{ But('I debug'){} } }.to change{ subject.steps.size }.from(0).to(1)
+    end
+  end
+
+  describe '.register_steps' do
+    it 'registers defined steps in Cucumber' do
+      pry, debugger = proc{ binding.pry }, proc{ debugger }
+      subject.steps.define(/^I (debug|pry)$/, pry)
+      subject.steps.define('I debug', debugger)
+
+      Cucumber::RbSupport::RbDsl.should_receive(:register_rb_step_definition).once.with(/^I (debug|pry)$/, pry)
+      Cucumber::RbSupport::RbDsl.should_receive(:register_rb_step_definition).once.with('I debug', debugger)
+
+      subject.register_steps
     end
   end
 end
